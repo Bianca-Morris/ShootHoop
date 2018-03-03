@@ -4,7 +4,7 @@ using System.Collections;
 public class BallLauncher : MonoBehaviour {
 
 	public GameObject ballPrefab;
-	public float ballSpeed = 5.0f;
+	public float ballSpeed = 100.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -15,13 +15,15 @@ public class BallLauncher : MonoBehaviour {
 	void Update () {
 
 		// Shoot the ball with right mouse button
-		if (Input.GetButtonDown ("Fire1")) {
+		if (Input.GetButtonDown ("Fire1") || Input.GetKeyDown("space")) {
 			GameObject newBall = Instantiate (ballPrefab);
 			// Give velocity to the ball
 			newBall.transform.position = transform.position; // spawn at the camera player
 			Rigidbody rb = newBall.GetComponent<Rigidbody> ();
-			rb.velocity = Vector3.forward * ballSpeed;
+			Camera camera = GetComponentInChildren<Camera> ();
+			rb.velocity = camera.transform.rotation * Vector3.forward * ballSpeed;
 		}
+
 
 
 //		if (Input.GetKeyDown (KeyCode.UpArrow)) {
